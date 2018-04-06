@@ -1,20 +1,21 @@
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GifService.Controllers
 {
     [Route("api/[controller]")]
-    public class SendGifControllers : Controller
+    public class SendGifController : Controller
     {
         private readonly IGifAdapter gifAdapter;
-        public SendGifControllers(IGifAdapter gifAdapter)
+        public SendGifController(IGifAdapter gifAdapter)
         {
             this.gifAdapter = gifAdapter;
 
         }
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            var results = gifAdapter.RetreiveRandomGif();
+            var results = await gifAdapter.RetreiveRandomGif();
             return Ok(results);
         }
     }

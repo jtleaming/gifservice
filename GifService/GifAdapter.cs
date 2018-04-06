@@ -1,5 +1,6 @@
 using System;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using GifService.Common;
 using Newtonsoft.Json.Linq;
@@ -21,7 +22,11 @@ namespace GifService
 
             var gifJson = JObject.Parse(gifs);
 
-            return gifJson["data"]["embed_url"].ToString();
+            var embededUri = gifJson["data"]["embed_url"].ToString();
+
+            var code = Regex.Split(embededUri, "\\w+/");
+
+            return code[2];
         }
 
     }

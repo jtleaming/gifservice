@@ -1,9 +1,11 @@
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GifService.Controllers
 {
     [Route("api/[controller]")]
+    [EnableCors("MyPolicy")]
     public class SendGifController : Controller
     {
         private readonly IGifAdapter gifAdapter;

@@ -27,6 +27,7 @@ namespace GifService
         {
             services.AddMvc();
             services.TryAddSingleton<IGifHttpClient, GifHttpClient>();
+            services.TryAddSingleton<IGifAdapter, GifAdapter>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

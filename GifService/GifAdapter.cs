@@ -6,7 +6,7 @@ using Newtonsoft.Json.Linq;
 
 namespace GifService
 {
-    public class GifAdapter
+    public class GifAdapter : IGifAdapter
     {
         private readonly IGifHttpClient httpClient;
         public GifAdapter(IGifHttpClient httpClient)

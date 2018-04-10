@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -16,19 +17,23 @@ namespace GifService
             this.httpClient = httpClient;
 
         }
-        public async Task<string> RetreiveRandomGif()
+        public async Task<List<string>> RetreiveRandomGif()
         {
             var respone = await httpClient.GetAsync("https://api.giphy.com/v1/gifs/random?api_key=0IlRPfjL5jNRTTkxfh8Tdoj0BMmfherx&tag=&rating=R");
             var gifs = await respone.Content.ReadAsStringAsync();
 
             var gifJson = JObject.Parse(gifs);
-            var embededUri = gifJson["data"]["embed_url"].ToString();
+            var mediaUri = gifJson["data"]["images"]["downsized_large"]["url"].ToString();
+            var embeddedUrl = gifJson["data"]["embed_url"].ToString();
 
             Encoding encode = Encoding.ASCII;
-            var bytes = encode.GetBytes(embededUri);
-            var enocdedUrl = Convert.ToBase64String(bytes);
+            byte [] bytes = encode.GetBytes(mediaUri);
+            var enocdedMediaUrl = Convert.ToBase64String(bytes);
 
-            return enocdedUrl;
+            bytes = encode.GetBytes(embeddedUrl);
+            var enocdedEmbedUrl = Convert.ToBase64String(bytes);
+
+            return new List<string>() { enocdedMediaUrl, enocdedEmbedUrl };
         }
 
     }

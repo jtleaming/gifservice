@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Text;
@@ -22,10 +23,10 @@ namespace tests
 
             mockHttpClient.Setup(g => g.GetAsync(It.IsAny<string>())).Returns(Task.FromResult(new HttpResponseMessage() { Content = new StringContent(File.ReadAllText("Fixtures/gifResponse.json")) }));
             //When
-            string gifUri = await gifAdapter.RetreiveRandomGif();
+            List<string> gifUri = await gifAdapter.RetreiveRandomGif();
 
             //Then
-            Assert.Equal("aHR0cHM6Ly9naXBoeS5jb20vZW1iZWQvMjZGUEZCUEVON1BEUlpqM08=", gifUri);
+            Assert.Equal( new List<string>(){"aHR0cHM6Ly9tZWRpYTIuZ2lwaHkuY29tL21lZGlhLzI2RlBGQlBFTjdQRFJaajNPL2dpcGh5LmdpZg==" , "aHR0cHM6Ly9naXBoeS5jb20vZW1iZWQvMjZGUEZCUEVON1BEUlpqM08="}, gifUri);
         }
     }
 }

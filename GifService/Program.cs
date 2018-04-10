@@ -19,6 +19,12 @@ namespace GifService
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .ConfigureLogging((honsting, logging) =>
+                {
+                    logging.AddConsole();
+                    logging.AddAzureWebAppDiagnostics();
+                    logging.AddDebug();
+                })
                 .UseStartup<Startup>()
                 .Build();
     }

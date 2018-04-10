@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -20,5 +21,12 @@ namespace GifService.Controllers
             var results = await gifAdapter.RetreiveRandomGif();
             return Ok(results);
         }
+
+        [HttpPost("received")]
+        public void Received([FromBody]string info)
+        {
+            Console.WriteLine("Received");
+        }
+
     }
 }

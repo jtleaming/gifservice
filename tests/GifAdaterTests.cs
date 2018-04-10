@@ -1,6 +1,9 @@
+using System;
 using System.IO;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using GifService;
 using GifService.Common;
 using Moq;
@@ -11,7 +14,7 @@ namespace tests
     public class tests
     {
         [Fact]
-        public async void GifAdaterTests()
+        public async void RetreiveRandomGif_ReturnsBase64String_WhenReceivesGifResponseJson()
         {
             //Given
             var mockHttpClient = new Mock<IGifHttpClient>();
@@ -20,8 +23,9 @@ namespace tests
             mockHttpClient.Setup(g => g.GetAsync(It.IsAny<string>())).Returns(Task.FromResult(new HttpResponseMessage() { Content = new StringContent(File.ReadAllText("Fixtures/gifResponse.json")) }));
             //When
             string gifUri = await gifAdapter.RetreiveRandomGif();
+
             //Then
-            Assert.Equal("https://giphy.com/embed/26FPFBPEN7PDRZj3O", gifUri);
+            Assert.Equal("aHR0cHM6Ly9naXBoeS5jb20vZW1iZWQvMjZGUEZCUEVON1BEUlpqM08=", gifUri);
         }
     }
 }

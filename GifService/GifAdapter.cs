@@ -1,5 +1,6 @@
 using System;
 using System.Net.Http;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using GifService.Common;
@@ -21,12 +22,13 @@ namespace GifService
             var gifs = await respone.Content.ReadAsStringAsync();
 
             var gifJson = JObject.Parse(gifs);
-
             var embededUri = gifJson["data"]["embed_url"].ToString();
 
-            var code = Regex.Split(embededUri, "\\w+/");
+            Encoding encode = Encoding.ASCII;
+            var bytes = encode.GetBytes(embededUri);
+            var enocdedUrl = Convert.ToBase64String(bytes);
 
-            return code[2];
+            return enocdedUrl;
         }
 
     }
